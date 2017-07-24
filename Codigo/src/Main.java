@@ -12,3 +12,6 @@
 /*aceptacion y transiciones posibles en la Regex */
 /************************************************/
 
+
+public class Main {
+}

@@ -11,11 +11,10 @@
 /* de los datos importantes de la regex              */
 /*****************************************************/
 
-public class Lector(String regex){
-	
-	private String[] estados
-	private String[] simbolos
+public class Lector {
+    private String[] estados;
+    private String[] simbolos;
 
-	public Lector(){
-	}
+    public Lector(String regex){
+    }
 }
