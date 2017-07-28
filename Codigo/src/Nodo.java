@@ -7,13 +7,14 @@ public class Nodo {
 
     public Nodo(){}
 
-    public int getId() {
-        return Id;
+    public ArrayList<String> getTransiciones() {
+        return transiciones;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public ArrayList<Nodo> getNodos() {
+        return nodos;
     }
+
 
     public void addNode(Nodo n){
         nodos.add(n);
@@ -21,5 +22,14 @@ public class Nodo {
 
     public void addTrans(String t){
         transiciones.add(t);
+    }
+
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }
