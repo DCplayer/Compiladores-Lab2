@@ -4,5 +4,8 @@
 public class RelacionesDeAutomatas {
 
     public RelacionesDeAutomatas(){}
-    
+
+    public Automata or(Automata i, Automata j){
+
+    }
 }

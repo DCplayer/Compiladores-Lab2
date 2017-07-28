@@ -24,6 +24,11 @@ public class Nodo {
         transiciones.add(t);
     }
 
+    public void add(String t, Nodo n){
+        addNode(n);
+        addTrans(t);
+    }
+
 
     public int getId() {
         return Id;
