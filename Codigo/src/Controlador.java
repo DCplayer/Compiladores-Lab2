@@ -21,7 +21,7 @@ public class Controlador {
 
     public Controlador(){
     }
-
+    /*Funcion para evitar los epsilons que existan*/
     public int enBuscaDelSiguiente(ArrayList<String> regex, int posicion){
         while(regex.get(posicion) == "&"){
             posicion += 1;
@@ -29,6 +29,28 @@ public class Controlador {
         return posicion;
     }
 
+    public String desEncapsularParentesis(String regex, int posicion){
+        String resultado = "";
+        int contadorParentesis = 1;
+        while (contadorParentesis > 0){
+            posicion =+ 1;
+            if (caracteres.get(posicion) == ")"){
+                contadorParentesis =-1;
+            }
+            else if(caracteres.get(posicion) == "("){
+                contadorParentesis =+1;
+
+            }
+
+            if (caracteres.get(posicion) != ")" || contadorParentesis != 0){
+                resultado = resultado + caracteres.get(posicion);
+            }
+
+
+        }
+        return resultado;
+
+    }
     public String firstPos(String regex){
         regex.getChars(0, regex.length() -1, characters, 0);
         for(char i: characters){
@@ -50,12 +72,9 @@ public class Controlador {
             }
             else if (caracteres.get(0) == "&"){
 
-                int i =enBuscaDelSiguiente(caracteres, 0);
+                int i = enBuscaDelSiguiente(caracteres, 0);
 
                 if(caracteres.get(i) == "("){
-
-                }
-                else if(caracteres.get(i) == "["){
 
                 }
                 else if(caracteres.get(i) == "|"){
@@ -78,6 +97,7 @@ public class Controlador {
                 return caracteres.get(0);
             }
         }
+        return "";
     }
 
     public String lastPos(String regex){
@@ -88,9 +108,10 @@ public class Controlador {
         else if(characters.length == 1){
             return String.valueOf(characters[0]);
         }
+        return "";
     }
 
     public String nullable(String regex){
-
+        return "";
     }
 }
