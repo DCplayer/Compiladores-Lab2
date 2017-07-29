@@ -50,7 +50,7 @@ public class RelacionesDeAutomatas {
         inicial.add("@", a.getNodoInicial());
 
         Automata elKleene = kleene(a);
-        
+
         a.setNodoFinal(elKleene.getNodoInicial());
         Nodo fin = elKleene.getNodoFinal();
 
