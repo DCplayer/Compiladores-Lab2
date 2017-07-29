@@ -13,17 +13,21 @@ public class Main {
         Automata AutomataFinal = control.LectorDeExpresiones();
 
         /*Aplicar las funciones de void al controlador para que realice los procesos dentro de el mismo*/
-        ArrayList<Nodo> losNodos = elContenedor.contenedor;
 
-        control.AlgoritmoImplantaSimbolos();
-
-        /*Obtener la Numeracion de ID de nodos*/
-        ArrayList<Integer> ids = control.getIds();
+        control.numerarNodos();
+        control.reducirRepetidos();
 
         /*Obtener las transiciones del grafo*/
+        control.AlgoritmoCreaTransiciones();
         ArrayList<Transicion> transiciones = control.getTransiciones();
 
+
+        /*Obtener la Numeracion de ID de nodos*/
+        control.AlgoritmoCreaID();
+        ArrayList<Integer> ids = control.getIds();
+
         /*Obtener los simbolos del grafo*/
+        control.AlgoritmoImplantaSimbolos();
         ArrayList<String> simbolos = control.getSimbolos();
 
         /*Obtener el Nodo Inicial*/
@@ -32,15 +36,17 @@ public class Main {
         /*Obtener el Nodo Final*/
         int IdFinal = AutomataFinal.getNodoFinal().getId();
 
-        System.out.println(control.getGrafo().size() );
-/*
+
+
         System.out.println("ESTADOS = " + ids);
         System.out.println("SIMBOLOS = " + simbolos);
         System.out.println("INICIO = " + IdInicial);
         System.out.println("ACEPTACION = " + IdFinal);
         System.out.println("TRANSICION = " + transiciones);
-*/
-        System.out.println(losNodos.size());
+
+
+
+
 
 
 

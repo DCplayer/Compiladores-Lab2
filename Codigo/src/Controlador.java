@@ -14,7 +14,7 @@ public class Controlador {
     /*Atributos para la funcion de AlgoritmoNumeraNodosyCreaTransiciones*/
     private boolean completo = true;
     private boolean paso = true;
-    private int contador = 1;
+    private int contador = 0;
     private ArrayList<Nodo> grafo = new ArrayList<Nodo>();
     private ArrayList<Nodo> grafo2 = new ArrayList<Nodo>();
     private ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
@@ -23,6 +23,9 @@ public class Controlador {
     /*Atributos para la funcion de AlgoritmoImplantaSimbolos*/
     private boolean criterio = true;
     private ArrayList<String> simbolos = new ArrayList<String>();
+    private ArrayList<Nodo> losNodosRepetidos = elContenedor.contenedor;
+    private ArrayList<Nodo> losNodosSinRepeticion = new ArrayList<Nodo>();
+    private int contable = 0;
 
 
     public Controlador(String regex) {
@@ -66,86 +69,56 @@ public class Controlador {
     }
 
 
-/*
-    public void  AlgoritmoNumeraNodosyCreaTransiciones(Automata a){
-        grafo.add(a.getNodoInicial());
-        for (Nodo i : grafo){
-            asegurador = true;
+    public void numerarNodos(){
+        /*SET ID TO EVERY NODE*/
+        for(Nodo i: losNodosRepetidos){
             i.setId(contador);
-            for(String s: i.getTransiciones()){
-                Nodo nodoLlegada = i.getNodos().get(i.getTransiciones().indexOf(s));
-                Transicion t = new Transicion(i.getId(), s, nodoLlegada.getId());
+            for(Nodo j: losNodosRepetidos){
+                if (j.equals(i)){
+                    j.setId(contador);
+                }
+            }
+            contador = contador + 1;
+        }
+        /*NO TOCAR*/
+    }
+
+    public void reducirRepetidos(){
+        /*ELIMINA REPETIDOS DE ARRAYLIST*/
+        while (contable < losNodosRepetidos.size()){
+            for (Nodo i : losNodosRepetidos){
+                if (i.getId() == contable && !losNodosSinRepeticion.contains(i)){
+                    losNodosSinRepeticion.add(i);
+                    contable = contable + 1;
+                }
+            }
+            contable = contable +1;
+        }
+        /*NO TOCAR*/
+    }
+
+
+    public void AlgoritmoCreaTransiciones(){
+        for(Nodo i: losNodosSinRepeticion){
+            for (String j: i.getTransiciones()){
+                Transicion t = new Transicion(i.getId(), j, i.getNodos().get(i.getTransiciones().indexOf(j)).getId());
                 transiciones.add(t);
-
-                for(Nodo x : grafo){
-                    if(nodoLlegada.getId() == x.getId()){
-                        asegurador = false;
-                    }
-                }
-                if (asegurador){
-                grafo.add(nodoLlegada);
-                }
-
-                ids.add(contador);
-                contador = contador +1 ;
             }
         }
-    }*/
+    }
 
-    public boolean revisar(ArrayList<Nodo> g, ArrayList<Nodo> g2){
-        for(Nodo i : g){
-            g2.add(i);
-            if (i.getId() == 0){
-                completo = false;
-                i.setId(contador);
-                contador = contador + 1;
-                for (Nodo k : i.getNodos()){
-                    if (k.getId() == 0){
-                        g2.add(k);
-                    }
-                }
-            }
+    public void AlgoritmoCreaID(){
+        for (Nodo i: losNodosSinRepeticion){
+            ids.add(i.getId());
         }
-        return completo;
     }
-
-    public void llenarDeNodos(){
-        boolean t = revisar(grafo, grafo2);
-        while(!completo){
-            if (paso){
-                System.out.println();
-                grafo = new ArrayList<Nodo>();
-                t = revisar(grafo2, grafo);
-                paso = false;
-            }
-            else if(!paso){
-                grafo2 = new ArrayList<Nodo>();
-                t = revisar(grafo,grafo2);
-                paso = true;
-
-            }
-        }
-
-    }
-
-    public void agregarInicialG(Nodo inicial){
-        grafo.add(inicial);
-
-    }
-
 
     public void AlgoritmoImplantaSimbolos(){
-        for(Transicion i: transiciones){
-            String trans = i.getTransicion();
-            criterio = true;
-
-            for(String s : simbolos){
-                if(trans.equals(s) || trans.equals("@")){
-                    criterio = false;
+        for (Nodo i : losNodosSinRepeticion){
+            for (String s: i.getTransiciones()){
+                if (!simbolos.contains(s) && !s.equals("@")){
+                    simbolos.add(s);
                 }
-            }
-            if (criterio){
-                simbolos.add(trans);
             }
         }
     }

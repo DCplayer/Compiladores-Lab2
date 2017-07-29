@@ -43,4 +43,13 @@ public class Nodo {
     public String toString(){
         return "Nodo: "+ Id + "\nTransiciones: " + transiciones + "\nNodos: " + nodos;
     }
+
+    public boolean equals(Nodo o){
+        if (this.transiciones.equals(o.getTransiciones()) && this.nodos.equals(o.getNodos())){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
 }
