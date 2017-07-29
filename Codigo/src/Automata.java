@@ -4,8 +4,8 @@ public class Automata {
     public Automata(String regex){
         nodoInicial = new Nodo();
         nodoFinal = new Nodo();
-        nodoInicial.addNode(nodoFinal);
-        nodoInicial.addTrans(regex);
+        nodoInicial.add(regex, nodoFinal);
+
     }
 
     public Automata(Nodo inicial, Nodo nfinal){
@@ -40,5 +40,9 @@ public class Automata {
 
     public void setNodoFinal(Nodo nodoFinal) {
         this.nodoFinal = nodoFinal;
+    }
+
+    public String toString(){
+        return "Nodo Inicial: " + nodoInicial + "\nNodo Final : " + nodoFinal +"";
     }
 }

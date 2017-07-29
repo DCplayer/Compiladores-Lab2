@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class Nodo {
-    private int Id;
+    private int Id = 0;
     private ArrayList<String> transiciones = new ArrayList<String>();
     private ArrayList<Nodo> nodos = new ArrayList<Nodo>();
 
@@ -36,5 +36,9 @@ public class Nodo {
 
     public void setId(int id) {
         Id = id;
+    }
+
+    public String toString(){
+        return "Nodo: "+ Id + "\nTransiciones: " + transiciones + "\nNodos: " + nodos;
     }
 }

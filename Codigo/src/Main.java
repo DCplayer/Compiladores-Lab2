@@ -37,6 +37,8 @@ public class Main {
         System.out.println("ACEPTACION = " + IdFinal);
         System.out.println("TRANSICION = " + transiciones);
 
+        System.out.println();
+
 
 
 

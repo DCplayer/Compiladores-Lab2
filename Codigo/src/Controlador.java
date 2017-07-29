@@ -31,10 +31,9 @@ public class Controlador {
 
         String RegexNormalizado = norm.PostFixYNormalizar(regex);
         int j = RegexNormalizado.length();
-        System.out.println(RegexNormalizado);
-        System.out.println(j);
         for (int i = 0; i < j; i++) {
             String x = RegexNormalizado.substring(i, i + 1);
+
             if (x.equals(".")) {
                 Automata b = stack.pop();
                 Automata a = stack.pop();
@@ -64,12 +63,13 @@ public class Controlador {
         return stack.pop();
     }
 
+
+
     public void  AlgoritmoNumeraNodosyCreaTransiciones(Automata a){
         grafo.add(a.getNodoInicial());
         for (Nodo i : grafo){
             asegurador = true;
             i.setId(contador);
-
             for(String s: i.getTransiciones()){
                 Nodo nodoLlegada = i.getNodos().get(i.getTransiciones().indexOf(s));
                 Transicion t = new Transicion(i.getId(), s, nodoLlegada.getId());
@@ -81,11 +81,11 @@ public class Controlador {
                     }
                 }
                 if (asegurador){
-                    grafo.add(nodoLlegada);
+                grafo.add(nodoLlegada);
                 }
 
                 ids.add(contador);
-                contador =+1 ;
+                contador = contador +1 ;
             }
         }
     }
@@ -120,6 +120,10 @@ public class Controlador {
 
     public ArrayList<String> getSimbolos() {
         return simbolos;
+    }
+
+    public int getContador(){
+        return contador;
     }
 }
 
