@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Nodo {
     private int Id;
-    private ArrayList<String> transiciones;
-    private ArrayList<Nodo> nodos;
+    private ArrayList<String> transiciones = new ArrayList<String>();
+    private ArrayList<Nodo> nodos = new ArrayList<Nodo>();
 
     public Nodo(){}
 

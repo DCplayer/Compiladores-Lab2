@@ -36,4 +36,8 @@ public class Transicion {
     public void setTransicion(String transicion) {
         this.transicion = transicion;
     }
+
+    public String toString(){
+        return "{" + nodoInicial + ", " + transicion + ", " + nodoFinal + "}";
+    }
 }

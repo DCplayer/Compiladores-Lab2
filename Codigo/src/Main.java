@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -9,19 +10,34 @@ public class Main {
         String regex = sc.nextLine();
         Controlador control = new Controlador(regex);
 
-        Automata t = control.LectorDeExpresiones();
+        Automata AutomataFinal = control.LectorDeExpresiones();
+
+        /*Aplicar las funciones de void al controlador para que realice los procesos dentro de el mismo*/
+        control.AlgoritmoNumeraNodosyCreaTransiciones(AutomataFinal);
+        control.AlgoritmoImplantaSimbolos();
+
+        /*Obtener la Numeracion de ID de nodos*/
+        ArrayList<Integer> ids = control.getIds();
+
+        /*Obtener las transiciones del grafo*/
+        ArrayList<Transicion> transiciones = control.getTransiciones();
+
+        /*Obtener los simbolos del grafo*/
+        ArrayList<String> simbolos = control.getSimbolos();
 
         /*Obtener el Nodo Inicial*/
-        /*Obtener el Nodo Final*/
-        /*Obtener la Numeracion de ID de nodos*/
-        /*Obtener las transiciones del grafo*/
-        /*Obtener los simbolos del grafo*/
+        int IdInicial = AutomataFinal.getNodoInicial().getId();
 
-        /*Se normalizo y postfixeo la expresion regular para que se tome en cuenta ? como (x|@)*/
-        String RegexNormalizado = norm.PostFixYNormalizar(regex);
-        String i = RegExConverter.infixToPostfix("abc");
-        System.out.println(i);
-        System.out.println(RegexNormalizado);
+        /*Obtener el Nodo Final*/
+        int IdFinal = AutomataFinal.getNodoFinal().getId();
+
+        System.out.println("ESTADOS = " + ids);
+        System.out.println("SIMBOLOS = " + simbolos);
+        System.out.println("INICIO = " + IdInicial);
+        System.out.println("ACEPTACION = " + IdFinal);
+        System.out.println("TRANSICION = " + transiciones);
+
+
 
 
     }

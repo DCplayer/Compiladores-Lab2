@@ -4,6 +4,7 @@ import java.util.Stack;
  * Created by Diego Castañeda on 28/07/2017.
  */
 public class Controlador {
+
     /*Atributos para la funcion de Lector de Expresiones*/
     private NormalizadorDeRegex norm = new NormalizadorDeRegex();
     private String regex;
@@ -11,15 +12,15 @@ public class Controlador {
     private Stack<Automata> stack = new Stack<Automata>();
 
     /*Atributos para la funcion de AlgoritmoNumeraNodosyCreaTransiciones*/
-    boolean asegurador = true;
-    int contador = 0;
-    ArrayList<Nodo> grafo = new ArrayList<Nodo>();
-    ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
-    ArrayList<Integer> ids = new ArrayList<Integer>();
+    private boolean asegurador = true;
+    private int contador = 0;
+    private ArrayList<Nodo> grafo = new ArrayList<Nodo>();
+    private ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
+    private ArrayList<Integer> ids = new ArrayList<Integer>();
 
     /*Atributos para la funcion de AlgoritmoImplantaSimbolos*/
-    boolean criterio = true;
-    ArrayList<String> simbolos = new ArrayList<String>();
+    private boolean criterio = true;
+    private ArrayList<String> simbolos = new ArrayList<String>();
 
 
     public Controlador(String regex) {
@@ -30,8 +31,10 @@ public class Controlador {
 
         String RegexNormalizado = norm.PostFixYNormalizar(regex);
         int j = RegexNormalizado.length();
+        System.out.println(RegexNormalizado);
+        System.out.println(j);
         for (int i = 0; i < j; i++) {
-            String x = regex.substring(i, i + 1);
+            String x = RegexNormalizado.substring(i, i + 1);
             if (x.equals(".")) {
                 Automata b = stack.pop();
                 Automata a = stack.pop();
@@ -103,5 +106,20 @@ public class Controlador {
         }
     }
 
+    public ArrayList<Nodo> getGrafo() {
+        return grafo;
+    }
+
+    public ArrayList<Transicion> getTransiciones() {
+        return transiciones;
+    }
+
+    public ArrayList<Integer> getIds() {
+        return ids;
+    }
+
+    public ArrayList<String> getSimbolos() {
+        return simbolos;
+    }
 }
 
