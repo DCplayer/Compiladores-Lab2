@@ -10,8 +10,8 @@ public class Main {
 
         /*Se normalizo y postfixeo la expresion regular para que se tome en cuenta ? como (x|@)*/
         String RegexNormalizado = norm.PostFixYNormalizar(regex);
-        String i = RegExConverter.infixToPostfix("bb*abcc* ");
-
+        String i = RegExConverter.infixToPostfix("a?+");
+        System.out.println(i);
         System.out.println(RegexNormalizado);
     }
 }
