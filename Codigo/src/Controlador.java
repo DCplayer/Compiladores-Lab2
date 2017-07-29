@@ -12,9 +12,11 @@ public class Controlador {
     private Stack<Automata> stack = new Stack<Automata>();
 
     /*Atributos para la funcion de AlgoritmoNumeraNodosyCreaTransiciones*/
-    private boolean asegurador = true;
-    private int contador = 0;
+    private boolean completo = true;
+    private boolean paso = true;
+    private int contador = 1;
     private ArrayList<Nodo> grafo = new ArrayList<Nodo>();
+    private ArrayList<Nodo> grafo2 = new ArrayList<Nodo>();
     private ArrayList<Transicion> transiciones = new ArrayList<Transicion>();
     private ArrayList<Integer> ids = new ArrayList<Integer>();
 
@@ -64,7 +66,7 @@ public class Controlador {
     }
 
 
-
+/*
     public void  AlgoritmoNumeraNodosyCreaTransiciones(Automata a){
         grafo.add(a.getNodoInicial());
         for (Nodo i : grafo){
@@ -88,7 +90,49 @@ public class Controlador {
                 contador = contador +1 ;
             }
         }
+    }*/
+
+    public boolean revisar(ArrayList<Nodo> g, ArrayList<Nodo> g2){
+        for(Nodo i : g){
+            g2.add(i);
+            if (i.getId() == 0){
+                completo = false;
+                i.setId(contador);
+                contador = contador + 1;
+                for (Nodo k : i.getNodos()){
+                    if (k.getId() == 0){
+                        g2.add(k);
+                    }
+                }
+            }
+        }
+        return completo;
     }
+
+    public void llenarDeNodos(){
+        boolean t = revisar(grafo, grafo2);
+        while(!completo){
+            if (paso){
+                System.out.println();
+                grafo = new ArrayList<Nodo>();
+                t = revisar(grafo2, grafo);
+                paso = false;
+            }
+            else if(!paso){
+                grafo2 = new ArrayList<Nodo>();
+                t = revisar(grafo,grafo2);
+                paso = true;
+
+            }
+        }
+
+    }
+
+    public void agregarInicialG(Nodo inicial){
+        grafo.add(inicial);
+
+    }
+
 
     public void AlgoritmoImplantaSimbolos(){
         for(Transicion i: transiciones){

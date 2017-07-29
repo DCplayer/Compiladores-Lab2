@@ -13,7 +13,8 @@ public class Main {
         Automata AutomataFinal = control.LectorDeExpresiones();
 
         /*Aplicar las funciones de void al controlador para que realice los procesos dentro de el mismo*/
-        control.AlgoritmoNumeraNodosyCreaTransiciones(AutomataFinal);
+        control.agregarInicialG(AutomataFinal.getNodoInicial());
+        control.llenarDeNodos();
         control.AlgoritmoImplantaSimbolos();
 
         /*Obtener la Numeracion de ID de nodos*/
@@ -30,6 +31,8 @@ public class Main {
 
         /*Obtener el Nodo Final*/
         int IdFinal = AutomataFinal.getNodoFinal().getId();
+
+        System.out.println(control.getGrafo().size() );
 
         System.out.println("ESTADOS = " + ids);
         System.out.println("SIMBOLOS = " + simbolos);
