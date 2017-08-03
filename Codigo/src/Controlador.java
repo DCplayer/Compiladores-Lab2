@@ -62,6 +62,7 @@ public class Controlador {
 
             } else {
                 Automata y = new Automata(x);
+
                 stack.push(y);
             }
         }

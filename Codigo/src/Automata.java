@@ -1,5 +1,8 @@
+import java.util.ArrayList;
+
 public class Automata {
     private Nodo nodoInicial, nodoFinal;
+    private ArrayList<Nodo> historial = new ArrayList<Nodo>();
 
     public Automata(String regex){
         nodoInicial = new Nodo();
