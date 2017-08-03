@@ -46,9 +46,7 @@ public class RelacionesDeAutomatas {
     }
 
     public Automata sum(Automata a){
-        Nodo inicial = new Nodo();
-        inicial.add("@", a.getNodoInicial());
-
+        Nodo inicial = a.getNodoInicial();
         Automata elKleene = kleene(a);
 
         a.setNodoFinal(elKleene.getNodoInicial());

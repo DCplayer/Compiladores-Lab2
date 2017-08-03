@@ -1,9 +1,12 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Stack;
 /**
  * Created by Diego Castañeda on 28/07/2017.
  */
 public class Controlador {
+
+    public int ContadorDeID = 0;
 
     /*Atributos para la funcion de Lector de Expresiones*/
     private NormalizadorDeRegex norm = new NormalizadorDeRegex();
@@ -43,25 +46,94 @@ public class Controlador {
                 Automata b = stack.pop();
                 Automata a = stack.pop();
                 Automata concatencion = rel.and(a,b);
+
+                /*Se toman todos los nodos del automata A menos el ultimo*/
+                ArrayList<Nodo>  listazo = new ArrayList<Nodo>();
+                int numeroDeElementos = a.getHistorial().size();
+                for (int num = 1; i <numeroDeElementos; i++){
+                    listazo.add(a.getHistorial().get(i -1));
+                }
+                listazo.addAll(b.getHistorial());
+                concatencion.setHistorial(listazo);
+
                 stack.push(concatencion);
 
             } else if (x.equals("|")) {
                 Automata b = stack.pop();
                 Automata a = stack.pop();
                 Automata or = rel.or(a,b);
+
+                /*Agregando todos los nodos del nuevo automata a su lista de nodos
+                * asi como agregando identificacores a los nodos inicial y final del
+                * nuevo automata*/
+                ArrayList<Nodo> listazo = new ArrayList<Nodo>();
+                or.getNodoInicial().setId(ContadorDeID);
+                ContadorDeID =+1;
+                or.getNodoFinal().setId(ContadorDeID);
+                ContadorDeID =+ 1;
+                listazo.add(or.getNodoInicial());
+                listazo.addAll(a.getHistorial());
+                listazo.addAll(b.getHistorial());
+                listazo.add(or.getNodoFinal());
+                or.setHistorial(listazo);
+
                 stack.push(or);
 
             } else if (x.equals("+")) {
                 Automata a = stack.pop();
+                Automata kleene = rel.kleene(a);
                 Automata kleeneSuma = rel.sum(a);
+
+                ArrayList<Nodo>  listazo = new ArrayList<Nodo>();
+                int numeroDeElementos = a.getHistorial().size();
+                for (int num = 1; i <numeroDeElementos; i++){
+                    listazo.add(a.getHistorial().get(i -1));
+                }
+
+                kleene.getNodoInicial().setId(ContadorDeID);
+                ContadorDeID =+1;
+                kleene.getNodoFinal().setId(ContadorDeID);
+                ContadorDeID =+1;
+
+                listazo.add(kleene.getNodoInicial());
+                listazo.addAll(a.getHistorial());
+                listazo.add(kleene.getNodoFinal());
+
+                kleeneSuma.setHistorial(listazo);
+
                 stack.push(kleeneSuma);
 
             } else if (x.equals("*")) {
-                Automata kleene = rel.kleene(stack.pop());
+                Automata a = stack.pop();
+                Automata kleene = rel.kleene(a);
+
+                /*Creando una lista de nodos para el Automata Kleene y
+                * dando identificadores a los nodos inicial y final del automata*/
+                ArrayList<Nodo> listazo = new ArrayList<Nodo>();
+                kleene.getNodoInicial().setId(ContadorDeID);
+                ContadorDeID =+1;
+                kleene.getNodoFinal().setId(ContadorDeID);
+                ContadorDeID =+1;
+                listazo.add(kleene.getNodoInicial());
+                listazo.addAll(a.getHistorial());
+                listazo.add(kleene.getNodoFinal());
+                kleene.setHistorial(listazo);
+
                 stack.push(kleene);
 
             } else {
                 Automata y = new Automata(x);
+
+                /*Agregando los nodos a la lista de nodos del automata
+                * y nombrandolos con identificadore :D */
+                ArrayList<Nodo> lista = new ArrayList<Nodo>();
+                y.getNodoInicial().setId(ContadorDeID);
+                ContadorDeID =+1;
+                y.getNodoFinal().setId(ContadorDeID);
+                ContadorDeID =+1;
+                lista.add(y.getNodoInicial());
+                lista.add(y.getNodoFinal());
+                y.setHistorial(lista);
 
                 stack.push(y);
             }

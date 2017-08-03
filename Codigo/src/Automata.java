@@ -45,6 +45,14 @@ public class Automata {
         this.nodoFinal = nodoFinal;
     }
 
+    public ArrayList<Nodo> getHistorial() {
+        return historial;
+    }
+
+    public void setHistorial(ArrayList<Nodo> historial) {
+        this.historial = historial;
+    }
+
     public String toString(){
         return "Nodo Inicial: " + nodoInicial + "\nNodo Final : " + nodoFinal +"";
     }

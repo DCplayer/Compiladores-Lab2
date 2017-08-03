@@ -6,7 +6,6 @@ public class Nodo {
     private ArrayList<Nodo> nodos = new ArrayList<Nodo>();
 
     public Nodo(){
-        elContenedor.contenedor.add(this);
     }
 
     public ArrayList<String> getTransiciones() {
