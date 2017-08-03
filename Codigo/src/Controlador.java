@@ -6,7 +6,7 @@ import java.util.Stack;
  */
 public class Controlador {
 
-
+    static int ContadorDeID = 0;
 
     /*Atributos para la funcion de Lector de Expresiones*/
     private NormalizadorDeRegex norm = new NormalizadorDeRegex();
@@ -26,8 +26,6 @@ public class Controlador {
     /*Atributos para la funcion de AlgoritmoImplantaSimbolos*/
     private boolean criterio = true;
     private ArrayList<String> simbolos = new ArrayList<String>();
-    private ArrayList<Nodo> losNodosRepetidos = elContenedor.contenedor;
-    private ArrayList<Nodo> losNodosSinRepeticion = new ArrayList<Nodo>();
     private int contable = 0;
 
 
@@ -37,7 +35,7 @@ public class Controlador {
 
     public Automata LectorDeExpresiones( ) {
 
-        int ContadorDeID = 0;
+
         String RegexNormalizado = norm.PostFixYNormalizar(regex);
         int j = RegexNormalizado.length();
         for (int i = 0; i < j; i++) {
@@ -69,9 +67,9 @@ public class Controlador {
                 * nuevo automata*/
                 ArrayList<Nodo> listazo = new ArrayList<Nodo>();
                 or.getNodoInicial().setId(ContadorDeID);
-                ContadorDeID =+1;
+                ContadorDeID  = ContadorDeID + 1;
                 or.getNodoFinal().setId(ContadorDeID);
-                ContadorDeID =+ 1;
+                ContadorDeID  = ContadorDeID + 1;
                 listazo.add(or.getNodoInicial());
                 listazo.addAll(a.getHistorial());
                 listazo.addAll(b.getHistorial());
@@ -92,9 +90,9 @@ public class Controlador {
                 }
 
                 kleene.getNodoInicial().setId(ContadorDeID);
-                ContadorDeID =+1;
+                ContadorDeID  = ContadorDeID + 1;
                 kleene.getNodoFinal().setId(ContadorDeID);
-                ContadorDeID =+1;
+                ContadorDeID  = ContadorDeID + 1;
 
                 listazo.add(kleene.getNodoInicial());
                 listazo.addAll(a.getHistorial());
@@ -112,9 +110,9 @@ public class Controlador {
                 * dando identificadores a los nodos inicial y final del automata*/
                 ArrayList<Nodo> listazo = new ArrayList<Nodo>();
                 kleene.getNodoInicial().setId(ContadorDeID);
-                ContadorDeID =+1;
+                ContadorDeID  = ContadorDeID + 1;
                 kleene.getNodoFinal().setId(ContadorDeID);
-                ContadorDeID =+1;
+                ContadorDeID  = ContadorDeID + 1;
                 listazo.add(kleene.getNodoInicial());
                 listazo.addAll(a.getHistorial());
                 listazo.add(kleene.getNodoFinal());
@@ -129,9 +127,9 @@ public class Controlador {
                 * y nombrandolos con identificadore :D */
                 ArrayList<Nodo> lista = new ArrayList<Nodo>();
                 y.getNodoInicial().setId(ContadorDeID);
-                ContadorDeID =+1;
+                ContadorDeID  = ContadorDeID + 1;
                 y.getNodoFinal().setId(ContadorDeID);
-                ContadorDeID =+1;
+                ContadorDeID  = ContadorDeID + 1;
                 lista.add(y.getNodoInicial());
                 lista.add(y.getNodoFinal());
                 y.setHistorial(lista);
@@ -142,52 +140,17 @@ public class Controlador {
         return stack.pop();
     }
 
-
-    public void numerarNodos(){
-        /*SET ID TO EVERY NODE*/
-        for(Nodo i: losNodosRepetidos){
-            i.setId(contador);
-            for(Nodo j: losNodosRepetidos){
-                if (j.equals(i)){
-                    j.setId(contador);
-                }
-            }
-            contador = contador + 1;
-        }
-        /*NO TOCAR*/
-    }
-
-    public void reducirRepetidos(){
-        /*ELIMINA REPETIDOS DE ARRAYLIST*/
-        while (contable < losNodosRepetidos.size()){
-            for (Nodo i : losNodosRepetidos){
-                if (i.getId() == contable && !losNodosSinRepeticion.contains(i)){
-                    losNodosSinRepeticion.add(i);
-                    contable = contable + 1;
-                }
-            }
-            contable = contable +1;
-        }
-        /*NO TOCAR*/
-    }
-
-
-    public void AlgoritmoCreaTransiciones(){
-        for(Nodo i: losNodosSinRepeticion){
+    public ArrayList<Transicion> AlgoritmoCreaTransiciones(ArrayList<Nodo> a){
+        for(Nodo i: a){
             for (String j: i.getTransiciones()){
                 Transicion t = new Transicion(i.getId(), j, i.getNodos().get(i.getTransiciones().indexOf(j)).getId());
                 transiciones.add(t);
             }
         }
+        return transiciones;
     }
 
-    public void AlgoritmoCreaID(){
-        for (Nodo i: losNodosSinRepeticion){
-            ids.add(i.getId());
-        }
-    }
-
-    public ArrayList<String> AlgoritmoImplantaSimbolos(ArrayList<Nodo> a){
+     public ArrayList<String> AlgoritmoImplantaSimbolos(ArrayList<Nodo> a){
         for (Nodo i : a){
             for (String s: i.getTransiciones()){
                 if (!simbolos.contains(s) && !s.equals("@")){

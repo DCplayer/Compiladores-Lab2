@@ -1,3 +1,6 @@
+import sun.plugin.javascript.navig.AnchorArray;
+import sun.plugin.javascript.navig.Array;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -12,9 +15,9 @@ public class Main {
 
         Automata AutomataFinal = control.LectorDeExpresiones();
         ArrayList<Nodo> grafo = AutomataFinal.getHistorial();
-        /*Aplicar las funciones de void al controlador para que realice los procesos dentro de el mismo*/
 
         /*Obtener las transiciones del grafo*/
+        ArrayList<Transicion> t = control.AlgoritmoCreaTransiciones(grafo);
 
 
         /*Obtener la Numeracion de ID de nodos*/
@@ -24,6 +27,7 @@ public class Main {
         }
 
         /*Obtener los simbolos del grafo*/
+        ArrayList<String> s = control.AlgoritmoImplantaSimbolos(grafo);
 
         /*Obtener el Nodo Inicial*/
         int IdInicial = AutomataFinal.getNodoInicial().getId();
@@ -31,20 +35,11 @@ public class Main {
         /*Obtener el Nodo Final*/
         int IdFinal = AutomataFinal.getNodoFinal().getId();
 
-
-
         System.out.println("ESTADOS = " + ids);
-        System.out.println("SIMBOLOS = " );
+        System.out.println("SIMBOLOS = " + s);
         System.out.println("INICIO = " + IdInicial);
         System.out.println("ACEPTACION = " + IdFinal);
-        System.out.println("TRANSICION = " );
-
-
-
-
-
-
-
+        System.out.println("TRANSICION = " + t);
 
     }
 }
