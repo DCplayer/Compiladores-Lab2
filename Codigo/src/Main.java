@@ -11,24 +11,19 @@ public class Main {
         Controlador control = new Controlador(regex);
 
         Automata AutomataFinal = control.LectorDeExpresiones();
-
+        ArrayList<Nodo> grafo = AutomataFinal.getHistorial();
         /*Aplicar las funciones de void al controlador para que realice los procesos dentro de el mismo*/
 
-        control.numerarNodos();
-        control.reducirRepetidos();
-
         /*Obtener las transiciones del grafo*/
-        control.AlgoritmoCreaTransiciones();
-        ArrayList<Transicion> transiciones = control.getTransiciones();
 
 
         /*Obtener la Numeracion de ID de nodos*/
-        control.AlgoritmoCreaID();
-        ArrayList<Integer> ids = control.getIds();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        for(Nodo i: grafo){
+            ids.add(i.getId());
+        }
 
         /*Obtener los simbolos del grafo*/
-        control.AlgoritmoImplantaSimbolos();
-        ArrayList<String> simbolos = control.getSimbolos();
 
         /*Obtener el Nodo Inicial*/
         int IdInicial = AutomataFinal.getNodoInicial().getId();
@@ -39,10 +34,10 @@ public class Main {
 
 
         System.out.println("ESTADOS = " + ids);
-        System.out.println("SIMBOLOS = " + simbolos);
+        System.out.println("SIMBOLOS = " );
         System.out.println("INICIO = " + IdInicial);
         System.out.println("ACEPTACION = " + IdFinal);
-        System.out.println("TRANSICION = " + transiciones);
+        System.out.println("TRANSICION = " );
 
 
 

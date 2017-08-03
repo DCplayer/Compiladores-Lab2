@@ -6,7 +6,7 @@ import java.util.Stack;
  */
 public class Controlador {
 
-    public int ContadorDeID = 0;
+
 
     /*Atributos para la funcion de Lector de Expresiones*/
     private NormalizadorDeRegex norm = new NormalizadorDeRegex();
@@ -37,6 +37,7 @@ public class Controlador {
 
     public Automata LectorDeExpresiones( ) {
 
+        int ContadorDeID = 0;
         String RegexNormalizado = norm.PostFixYNormalizar(regex);
         int j = RegexNormalizado.length();
         for (int i = 0; i < j; i++) {
@@ -186,14 +187,15 @@ public class Controlador {
         }
     }
 
-    public void AlgoritmoImplantaSimbolos(){
-        for (Nodo i : losNodosSinRepeticion){
+    public ArrayList<String> AlgoritmoImplantaSimbolos(ArrayList<Nodo> a){
+        for (Nodo i : a){
             for (String s: i.getTransiciones()){
                 if (!simbolos.contains(s) && !s.equals("@")){
                     simbolos.add(s);
                 }
             }
         }
+        return simbolos;
     }
 
     public ArrayList<Nodo> getGrafo() {
