@@ -28,11 +28,18 @@ public class RelacionesDeAutomatas {
         Nodo fin = b.getNodoFinal();
 
         a.setNodoFinal(b.getNodoInicial());
+        for (Nodo i : a.getNodoInicial().getNodos()){
+            if (i.equals(a.getNodoFinal())){
+                int index = a.getNodoInicial().getNodos().indexOf(i);
+                a.getNodoInicial().getNodos().add(index, b.getNodoInicial());
+            }
+        }
 
         Automata x = new Automata(inicial, fin);
         return x;
     }
 
+    /*PROBLEMAS AQUI, SE REPITEN LAS TRANSICIONES*/
     public Automata kleene(Automata a){
         Nodo inicial = new Nodo();
         Nodo fin =  new Nodo();

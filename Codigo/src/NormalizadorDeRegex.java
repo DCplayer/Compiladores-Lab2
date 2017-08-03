@@ -11,9 +11,11 @@ public class NormalizadorDeRegex {
     /*Funcion que serviria para el caso de +, pero realmente existen muchos casos problematicos
     * posibles, por ello no se normalizara el + y mejor solo se creara una operacion para crear
     * un automata si se encontrara una + */
-    public String yStringKleeneado(String regex, int n){
+    public String yStringKleeneado(String regex){
         kleeneado = "";
         contador = 0;
+        int n = 1;
+
         String y = regex.substring(n-1, n);
         if (y.equals(")")){
             contador =+ 1;
