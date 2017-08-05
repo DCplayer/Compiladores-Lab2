@@ -27,19 +27,21 @@ public class RelacionesDeAutomatas {
         Nodo inicial = a.getNodoInicial();
         Nodo fin = b.getNodoFinal();
 
-        a.setNodoFinal(b.getNodoInicial());
-        for (Nodo i : a.getNodoInicial().getNodos()){
-            if (i.equals(a.getNodoFinal())){
-                int index = a.getNodoInicial().getNodos().indexOf(i);
-                a.getNodoInicial().getNodos().add(index, b.getNodoInicial());
+        for (Nodo i : a.getHistorial()){
+            for(Nodo x : i.getNodos()){
+                if (x.equals(a.getNodoFinal())){
+                    int elIndex = i.getNodos().indexOf(x);
+                    i.getNodos().set(elIndex, b.getNodoInicial());
+                }
             }
         }
+        a.setNodoFinal(b.getNodoInicial());
 
         Automata x = new Automata(inicial, fin);
         return x;
     }
 
-    /*PROBLEMAS AQUI, SE REPITEN LAS TRANSICIONES*/
+    /*PROBLEMAS AQUI, SE REPITEN LAS TRANSICIONESw*/
     public Automata kleene(Automata a){
         Nodo inicial = new Nodo();
         Nodo fin =  new Nodo();
@@ -53,11 +55,11 @@ public class RelacionesDeAutomatas {
     }
 
     public Automata sum(Automata a){
-        Nodo inicial = a.getNodoInicial();
-        Automata elKleene = kleene(a);
-
-        a.setNodoFinal(elKleene.getNodoInicial());
-        Nodo fin = elKleene.getNodoFinal();
+        Nodo inicial = new Nodo();
+        Nodo fin =  new Nodo();
+        inicial.add("@", a.getNodoInicial());
+        a.getNodoFinal().add("@", a.getNodoInicial());
+        a.getNodoFinal().add("@", fin);
 
         Automata x = new Automata(inicial, fin);
         return x;

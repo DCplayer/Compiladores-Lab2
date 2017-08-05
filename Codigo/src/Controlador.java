@@ -49,10 +49,14 @@ public class Controlador {
                 /*Se toman todos los nodos del automata A menos el ultimo*/
                 ArrayList<Nodo>  listazo = new ArrayList<Nodo>();
                 int numeroDeElementos = a.getHistorial().size();
-                for (int num = 1; i <numeroDeElementos; i++){
-                    listazo.add(a.getHistorial().get(i -1));
+                for (int num = 0; num + 1<numeroDeElementos; num++){
+                    listazo.add(a.getHistorial().get(num));
                 }
                 listazo.addAll(b.getHistorial());
+                ArrayList<Nodo> nodazo = new ArrayList<Nodo>();
+                for(Nodo q: listazo){
+                    nodazo.add(q);
+                }
                 concatencion.setHistorial(listazo);
 
                 stack.push(concatencion);
@@ -62,7 +66,7 @@ public class Controlador {
                 Automata a = stack.pop();
                 Automata or = rel.or(a,b);
 
-                /*Agregando todos los nodos del nuevo automata a su lista de nodos
+                /*Agregando todos los nodos del nuevo aautomata a su lista de nodos
                 * asi como agregando identificacores a los nodos inicial y final del
                 * nuevo automata*/
                 ArrayList<Nodo> listazo = new ArrayList<Nodo>();
@@ -80,24 +84,16 @@ public class Controlador {
 
             } else if (x.equals("+")) {
                 Automata a = stack.pop();
-                Automata kleene = rel.kleene(a);
                 Automata kleeneSuma = rel.sum(a);
 
-                ArrayList<Nodo>  listazo = new ArrayList<Nodo>();
-                int numeroDeElementos = a.getHistorial().size();
-                for (int num = 1; i <numeroDeElementos; i++){
-                    listazo.add(a.getHistorial().get(i -1));
-                }
-
-                kleene.getNodoInicial().setId(ContadorDeID);
-                ContadorDeID  = ContadorDeID + 1;
-                kleene.getNodoFinal().setId(ContadorDeID);
-                ContadorDeID  = ContadorDeID + 1;
-
-                listazo.add(kleene.getNodoInicial());
+                ArrayList<Nodo> listazo = new ArrayList<Nodo>();
+                kleeneSuma.getNodoInicial().setId(ContadorDeID);
+                ContadorDeID = ContadorDeID + 1;
+                kleeneSuma.getNodoFinal().setId(ContadorDeID);
+                ContadorDeID = ContadorDeID + 1;
+                listazo.add(kleeneSuma.getNodoInicial());
                 listazo.addAll(a.getHistorial());
-                listazo.add(kleene.getNodoFinal());
-
+                listazo.add(kleeneSuma.getNodoFinal());
                 kleeneSuma.setHistorial(listazo);
 
                 stack.push(kleeneSuma);
@@ -142,10 +138,13 @@ public class Controlador {
 
     public ArrayList<Transicion> AlgoritmoCreaTransiciones(ArrayList<Nodo> a){
         for(Nodo i: a){
-            for (String j: i.getTransiciones()){
-                Transicion t = new Transicion(i.getId(), j, i.getNodos().get(i.getTransiciones().indexOf(j)).getId());
+            int index = 0;
+            while (index < i.getNodos().size()){
+                Transicion t = new Transicion(i.getId(), i.getTransiciones().get(index), i.getNodos().get(index).getId());
                 transiciones.add(t);
+                index = index + 1;
             }
+
         }
         return transiciones;
     }
